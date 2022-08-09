@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>无敌贪吃蛇</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      background-color: rgb(111, 176, 123);
+    }
+
+    .btnbox {
+      width: 200px;
+      height: 300px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: center;
+      position: fixed;
+    }
+
+    .btnbox button {
+      width: 100px;
+      height: 50px;
+      font-size: 25px;
+      background-color: rgb(5, 90, 5);
+      color: aliceblue;
+      border-radius: 20px;
+    }
+
+    .score {
+      font-size: 25px;
+      color: aliceblue;
+    }
+
+    .score span {
+      font-size: 25px;
+      color: red;
+      font-weight: bold;
+    }
+
+    .map {
+      width: 800px;
+      height: 600px;
+      position: fixed;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      background: url(./1.jpg);
+      margin: auto;
+    }
+
+    .map>div {
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      border-radius: 20%;
+    }
+
+    div.head {
+      background: repeating-radial-gradient(rgb(250, 164, 130), rgb(242, 55, 17));
+    }
+
+    div.body {
+      background: repeating-radial-gradient(rgb(255, 184, 140), rgb(255, 139, 51));
+
+    }
+
+    div.food {
+      background: repeating-radial-gradient(rgb(241, 243, 108), rgb(215, 233, 94));
+      animation: foodAnimate 0.8s linear infinite;
+      left: 200px;
+      top: 50px;
+    }
+
+    @keyframes foodAnimate {
+      0% {
+        box-shadow: 0 0 10px white;
+      }
+
+      50% {
+        box-shadow: 0 0 100px white;
+      }
+
+      100% {
+        box-shadow: 0 0 10px white;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="btnbox">
+    <button id="start">开始</button>
+    <button id="pause">暂停</button>
+    <button id="restart">结束</button>
+    <div class="score">得分：<span>0</span></div>
+
+  </div>
+  <div class="map">
+  </div>
+  <script src="./snake.js"></script>
+  <script src="./food.js"></script>
+  <script src="./game.js"></script>
+  <script>
+
+    const game = new Game(".map", ".score span")
+    const start = document.querySelector("#start")
+    const pause = document.querySelector("#pause")
+    const restart = document.querySelector("#restart")
+    start.onclick = function () {
+      game.start()
+    }
+    pause.onclick = function () {
+      game.pause()
+    }
+    restart.onclick = function () {
+      game.restart()
+    }
+    //键盘监听 左37 上38 右39 下40
+    document.onkeydown = function (e) {
+      switch (e.keyCode) {
+        case 37:
+          game.change("left")
+          break
+        case 38:
+          game.change("top")
+          break
+        case 39:
+          game.change("right")
+          break
+        case 40:
+          game.change("bottom")
+          break
+        case 13:
+          game.start()
+          break
+        case 32:
+          game.pause()
+          break
+        default:
+          break
+      }
+
+    }
+  </script>
+</body>
+
+</html>
